@@ -1,0 +1,14 @@
+from fastapi import APIRouter
+from app.services.github import get_github_user, get_github_repos
+
+router = APIRouter()
+
+
+@router.get("/users/{username}")
+def get_user(username: str):
+    return get_github_user(username)
+
+
+@router.get("/users/{username}/repos")
+def get_user_repos(username: str):
+    return get_github_repos(username)
