@@ -1,34 +1,47 @@
 # 🌐 OctoMind Frontend
 
-This is the **frontend dashboard** for the OctoMind project.
+Frontend del progetto **OctoMind**.
 
-It is a simple static web application that consumes the OctoMind backend API
-and displays GitHub insights in an interactive way.
-
----
-
-## 🎯 Responsibilities
-
-- Provide a simple user interface
-- Send requests to the backend API
-- Handle loading and error states
-- Render GitHub data dynamically
+Applicazione web statica che consuma la API backend e visualizza
+informazioni pubbliche provenienti da GitHub.
 
 ---
 
-## 🧱 Tech Stack
+## 🎯 Responsabilità
+
+- Fornire un’interfaccia utente semplice
+- Effettuare richieste al backend
+- Gestire stati di loading ed errore
+- Renderizzare dinamicamente i dati ricevuti
+
+---
+
+## 🧱 Stack Tecnologico
 
 - HTML
 - CSS
-- Vanilla JavaScript
+- JavaScript (Vanilla)
 - Fetch API
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Configurazione
 
-The backend API base URL is defined in `config.js`:
+L’URL del backend è definito in `config.js`:
 
 ```js
-const API_BASE_URL = "http://localhost:8000";
+export const API_BASE_URL = "https://octomind.onrender.com";
+
+
+In ambiente locale:
+
+export const API_BASE_URL = "http://127.0.0.1:8000";
+
+▶️ Avvio in locale
+
+Aprire direttamente:
+
+index.html
+
+Non è richiesto alcun build step.
 ```

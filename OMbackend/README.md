@@ -1,22 +1,22 @@
 # 🐍 OctoMind Backend
 
-This is the **backend API** for the OctoMind project.
+Backend API del progetto **OctoMind**.
 
-It is a Python service built with **FastAPI** that acts as a wrapper around the
-GitHub public APIs, exposing simplified and safe endpoints for the frontend.
-
----
-
-## 🎯 Responsibilities
-
-- Communicate with the GitHub REST API
-- Handle authentication via personal access token
-- Normalize and filter raw GitHub data
-- Expose clean REST endpoints
+Servizio Python sviluppato con **FastAPI** che funge da wrapper delle GitHub Public API,
+esponendo endpoint REST semplificati e sicuri per il frontend.
 
 ---
 
-## 🧱 Tech Stack
+## 🎯 Responsabilità
+
+- Comunicare con la GitHub REST API
+- Autenticarsi tramite Personal Access Token
+- Normalizzare e filtrare i dati ricevuti
+- Esporre endpoint REST puliti
+
+---
+
+## 🧱 Stack Tecnologico
 
 - Python 3.10+
 - FastAPI
@@ -25,26 +25,41 @@ GitHub public APIs, exposing simplified and safe endpoints for the frontend.
 
 ---
 
-## ⚙️ Configuration
+## 📂 Struttura Principale
 
-The backend requires a GitHub personal access token.
+app/
+├── main.py # Entry point FastAPI
+├── routers/ # Definizione endpoint
+├── services/ # Logica di integrazione GitHub
+├── core/ # Configurazione
+└── models/ # Schemi dati (opzionali)
 
-Create a `.env` file (see `.env.example`) and define:
+---
 
-```env
+## ⚙️ Configurazione
+
+È richiesto un GitHub Personal Access Token.
+
+Creare un file `.env` (vedi `.env.example`) con:
+
 GITHUB_TOKEN=your_token_here
-▶️ Run locally
+
+# ▶️ Avvio in locale
+
 pip install -r requirements.txt
 uvicorn app.main:app --reload
-The API will be available at:
 
-http://127.0.0.1:8000
-Interactive API docs:
+# 🚧 Scope & Limitazioni
 
-http://127.0.0.1:8000/docs
-🚧 Scope & Limitations
-No database
-No user authentication
-No OAuth flow
-Read-only access to public GitHub data
-```
+Nessun database
+Nessuna autenticazione utenti
+Nessun OAuth
+Accesso read-only a dati pubblici GitHub
+
+# 🎯 Perché ora è meglio
+
+- Sezioni coerenti
+- Struttura chiara
+- Linguaggio tecnico ma sobrio
+- Niente testo superfluo
+- Allineato al README principale
