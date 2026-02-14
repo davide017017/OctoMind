@@ -1,25 +1,30 @@
-# FastAPI: 
+# FastAPI:
 # framework principale per definire l'app, le route e il ciclo HTTP
 from fastapi import FastAPI
 
-# Request: 
-# rappresenta la richiesta HTTP in ingresso 
+# Request:
+# rappresenta la richiesta HTTP in ingresso
 # (usata negli exception handler)
 from fastapi import Request
 
-# CORSMiddleware: 
+# CORSMiddleware:
 # abilita richieste cross-origin dal frontend (browser → API)
 from fastapi.middleware.cors import CORSMiddleware
 
-# JSONResponse: 
+# JSONResponse:
 # permette di costruire risposte HTTP JSON personalizzate (status + body)
 from fastapi.responses import JSONResponse
 
-# Router dell'app: 
+from fastapi.responses import PlainTextResponse
+from slowapi.middleware import SlowAPIMiddleware
+from slowapi.errors import RateLimitExceeded
+from app.core.limiter import limiter
+
+# Router dell'app:
 # health (ping) e users (endpoint GitHub)
 from app.routers import health, users
 
-# Eccezioni di dominio GitHub sollevate dai service 
+# Eccezioni di dominio GitHub sollevate dai service
 # e intercettate globalmente
 from app.services.github.exceptions import (
     GitHubUserNotFound,
@@ -36,6 +41,12 @@ app = FastAPI(
     version="0.1.0",
 )
 
+# --------------------------------------------------
+# Rate limiter
+# --------------------------------------------------
+app.state.limiter = limiter
+app.add_middleware(SlowAPIMiddleware)
+
 
 # --------------------------------------------------
 # CORS configuration
@@ -43,7 +54,11 @@ app = FastAPI(
 # --------------------------------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # in produzione lo restringeremo
+    allow_origins=[
+        "https://octomind.netlify.app",
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -77,6 +92,11 @@ async def github_repos_not_found_handler(request: Request, exc: GitHubReposNotFo
             }
         },
     )
+
+
+@app.exception_handler(RateLimitExceeded)
+async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
+    return PlainTextResponse("Rate limit exceeded", status_code=429)
 
 
 # --------------------------------------------------

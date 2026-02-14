@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
+
+from app.core.limiter import limiter
 
 from app.services.github import get_github_user, get_github_repos
 
@@ -6,17 +8,20 @@ router = APIRouter()
 
 
 @router.get("/users/{username}")
-def get_user(username: str):
+@limiter.limit("30/minute")
+def get_user(request: Request, username: str):
     return get_github_user(username)
 
 
 @router.get("/users/{username}/repos")
-def get_user_repos(username: str):
+@limiter.limit("30/minute")
+def get_user_repos(request: Request, username: str):
     return get_github_repos(username)
 
 
 @router.get("/users/{username}/summary")
-def get_user_summary(username: str):
+@limiter.limit("30/minute")
+def get_user_summary(request: Request, username: str):
     user = get_github_user(username)
     repos = get_github_repos(username)
 
