@@ -1,6 +1,19 @@
 # 🐙 OctoMind
 
-**OctoMind** è un mini progetto full-stack pensato per studiare come una API Python
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi)
+![JavaScript](https://img.shields.io/badge/JavaScript-Frontend-yellow?logo=javascript)
+![HTML5](https://img.shields.io/badge/HTML5-Markup-orange?logo=html5)
+![Netlify](https://img.shields.io/badge/Deploy-Netlify-00C7B7?logo=netlify)
+![Render](https://img.shields.io/badge/Deploy-Render-46E3B7)
+
+[🌐 Vai all’app live](https://TUO-LINK-FRONTEND.netlify.app)
+
+![OctoMind Banner](OMfrontend/img/octomind.webp)
+
+---
+
+**OctoMind** è un mini progetto full-stack pensato per studiare come una API Python  
 comunica con un frontend leggero.
 
 L’applicazione consuma le GitHub Public API ed espone endpoint REST puliti che aggregano dati utente e repository.
@@ -9,8 +22,8 @@ L’applicazione consuma le GitHub Public API ed espone endpoint REST puliti che
 
 ## 📦 Struttura del progetto
 
-OctoMind/
-├── OMbackend/ # Backend FastAPI (Python)
+OctoMind/  
+├── OMbackend/ # Backend FastAPI (Python)  
 └── OMfrontend/ # Frontend statico (HTML + JS)
 
 ---
@@ -26,12 +39,14 @@ OctoMind/
 
 ## 🔌 Panoramica API
 
-GET /health
-GET /users/{username}
-GET /users/{username}/repos
+GET /health  
+GET /users/{username}  
+GET /users/{username}/repos  
 GET /users/{username}/summary
 
 L’endpoint `/summary` aggrega informazioni utente e statistiche sui repository.
+
+---
 
 ## 🚧 Scope & Limitazioni
 
