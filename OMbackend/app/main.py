@@ -18,6 +18,8 @@ from fastapi.responses import JSONResponse
 from fastapi.responses import PlainTextResponse
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi.errors import RateLimitExceeded
+from slowapi import _rate_limit_exceeded_handler
+
 from app.core.limiter import limiter
 
 # Router dell'app:
@@ -94,10 +96,7 @@ async def github_repos_not_found_handler(request: Request, exc: GitHubReposNotFo
     )
 
 
-@app.exception_handler(RateLimitExceeded)
-async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
-    return PlainTextResponse("Rate limit exceeded", status_code=429)
-
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # --------------------------------------------------
 # Health check
