@@ -69,22 +69,17 @@ btn.addEventListener("click", async () => {
   showLoading();
 
   try {
-    const userRes = await fetch(`${API_BASE_URL}/users/${username}`);
-    if (!userRes.ok) {
-      showError("User not found.");
+    const res = await fetch(`${API_BASE_URL}/users/${username}/summary`);
+
+    if (!res.ok) {
+      const err = await res.json();
+      showError(err.error?.message ?? "Unexpected error");
       return;
     }
 
-    const reposRes = await fetch(`${API_BASE_URL}/users/${username}/repos`);
-    if (!reposRes.ok) {
-      showError("Cannot load repositories.");
-      return;
-    }
+    const data = await res.json();
 
-    const user = await userRes.json();
-    const repos = await reposRes.json();
-
-    renderUser(user, repos);
+    renderUser(data.user, data.repos ?? []);
   } catch (err) {
     showError("Network error. Backend not reachable.");
   }

@@ -1,7 +1,8 @@
 from app.services.github._client import github_get
+from app.services.github.exceptions import GitHubReposNotFound
 
 
-def get_github_repos(username: str) -> list:
+def get_github_repos(username: str) -> list[dict]:
     response = github_get(
         f"/users/{username}/repos",
         params={
@@ -11,25 +12,22 @@ def get_github_repos(username: str) -> list:
         },
     )
 
-    if response.status_code != 200:
-        return [
-            {
-                "error": "Cannot fetch repos",
-                "status_code": response.status_code,
-            }
-        ]
+    if response.status_code == 404:
+        raise GitHubReposNotFound()
+
+    response.raise_for_status()
 
     repos = response.json()
 
     return [
         {
-            "name": repo.get("name"),
-            "full_name": repo.get("full_name"),
-            "description": repo.get("description"),
-            "stars": repo.get("stargazers_count"),
-            "language": repo.get("language"),
-            "fork": repo.get("fork"),
-            "repo_url": repo.get("html_url"),
+            "name": repo["name"],
+            "full_name": repo["full_name"],
+            "description": repo["description"],
+            "stars": repo["stargazers_count"],
+            "language": repo["language"],
+            "fork": repo["fork"],
+            "repo_url": repo["html_url"],
         }
         for repo in repos
     ]
