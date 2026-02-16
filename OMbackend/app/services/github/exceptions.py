@@ -4,3 +4,7 @@ class GitHubUserNotFound(Exception):
 
 class GitHubReposNotFound(Exception):
     pass
+
+
+class GitHubEventsNotFound(Exception):
+    pass
